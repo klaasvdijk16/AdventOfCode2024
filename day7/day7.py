@@ -29,7 +29,7 @@ def calculator(l, ops):
     values = l[1:]
     combi_len = len(values)-1
 
-    op_combinations = list(itertools.combinations_with_replacement(ops, combi_len))
+    op_combinations = list(itertools.product(ops, repeat=combi_len))
 
     for combi in op_combinations:
         equation = [x for y in zip(values, combi) for x in y] + [values[-1]]
@@ -48,8 +48,6 @@ def calculator(l, ops):
                     op = None
             else:
                 op = i
-
-
 
         if num1 == needed:
             return needed
