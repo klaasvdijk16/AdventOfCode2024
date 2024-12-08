@@ -3,10 +3,31 @@ import re
 import itertools
 
 def main():
-    pt1('day7/input.txt')
-
+    # pt1('day7/input.txt')
+    pt2('day7/input.txt')
 
 def pt1(file):
+    total = 0
+    with open(file, 'r') as f:
+        clean_data = []
+        data = f.read().splitlines()
+        data = [re.split('[: ]', l) for l in data]
+
+
+        for i in data:
+            i.remove('')
+            i = [int(x) for x in i]
+            clean_data.append(i)
+
+
+    for li in clean_data:
+        res = calculator(li, ['+', '*'])
+        total += res
+    print(total)
+
+
+# Answer still too high :(
+def pt2(file):
     total = 0
     with open(file, 'r') as f:
         clean_data = []
@@ -20,7 +41,7 @@ def pt1(file):
 
 
     for li in clean_data:
-        res = calculator(li, ['+', '*'])
+        res = calculator(li, ['+', '*', '||'])
         total += res
     print(total)
 
@@ -36,13 +57,19 @@ def calculator(l, ops):
         num1 = None
         op = None
         num2 = None
+        eq_res = None
         for i in equation:
             if isinstance(i, int):
                 if not num1:
                     num1 = i
                 else:
                     num2 = i
-                    eq_res = int(eval(f"{num1} {op} {num2}"))
+                    if op == "||":
+                        eq_res = int(str(num1) + str(num2))
+                    else:
+                        eq_res = int(eval(f"{num1} {op} {num2}"))
+                    if eq_res > needed:
+                        break
                     num1 = eq_res
                     num2 = None
                     op = None
