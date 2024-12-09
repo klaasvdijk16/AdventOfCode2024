@@ -1,3 +1,5 @@
+import itertools
+
 # part 1
 
 reports = []
@@ -29,12 +31,9 @@ for report in reports.copy():
 print(f"Number of safe reports: {n_safe_reports}")
 
 # part 2
+
 for report in reports:
-    permutations = []
-    for i in range(len(report)):
-        perm = report.copy()
-        perm.pop(i)
-        permutations.append(perm)
+    permutations = list(itertools.combinations(report, len(report)-1))
 
     safe_report = False
     for perm in permutations:
