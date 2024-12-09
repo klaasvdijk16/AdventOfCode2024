@@ -37,3 +37,23 @@ for update in updates:
     else:
         incorrect_updates.append(update) # prep for part 2
 print(f"Sum of middle page numbers of correctly-ordered updates: {total}")
+
+# part 2
+
+total = 0
+for update in incorrect_updates:
+    applicable_rules = []
+    for rule in rules:
+        if rule[0] in update and rule[1] in update:
+            applicable_rules.append(rule)
+    errors = 9999
+    while errors != 0:
+        errors = 0
+        for rule in applicable_rules:
+            if update.index(rule[0]) > update.index(rule[1]):
+                errors += 1
+                update.remove(rule[0])
+                update.insert(update.index(rule[1]), rule[0])
+    total += update[len(update) // 2]
+    
+print(f"Sum of middle page numbers of fixed incorrectly-ordered updates: {total}")
